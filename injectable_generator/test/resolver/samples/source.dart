@@ -20,16 +20,14 @@ class FactoryWithFactoryParams {
 
 @injectable
 class FactoryWithNullableFactoryParams {
-  const FactoryWithNullableFactoryParams(
-      @factoryParam SimpleFactory? simpleFactory);
+  const FactoryWithNullableFactoryParams(@factoryParam SimpleFactory? simpleFactory);
 }
 
 @injectable
 class AsyncFactoryWithNullableDeps {
   const AsyncFactoryWithNullableDeps(SimpleFactory? simpleFactory);
   @factoryMethod
-  static Future<AsyncFactoryWithNullableDeps> create(
-      @factoryParam SimpleFactory? simpleFactory) async {
+  static Future<AsyncFactoryWithNullableDeps> create(@factoryParam SimpleFactory? simpleFactory) async {
     return AsyncFactoryWithNullableDeps(simpleFactory);
   }
 }
@@ -37,8 +35,7 @@ class AsyncFactoryWithNullableDeps {
 class AsyncFactoryWithNonNullableDeps {
   const AsyncFactoryWithNonNullableDeps(SimpleFactory simpleFactory);
   @factoryMethod
-  static Future<AsyncFactoryWithNonNullableDeps> create(
-      @factoryParam SimpleFactory simpleFactory) async {
+  static Future<AsyncFactoryWithNonNullableDeps> create(@factoryParam SimpleFactory simpleFactory) async {
     return AsyncFactoryWithNonNullableDeps(simpleFactory);
   }
 }

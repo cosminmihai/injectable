@@ -2,7 +2,6 @@
 // to be used later when generating the register function
 
 import 'package:collection/collection.dart';
-import 'package:injectable/injectable.dart';
 import 'package:injectable_generator/models/module_config.dart';
 
 import '../injectable_types.dart';
@@ -43,8 +42,7 @@ class DependencyConfig {
   });
 
   // used for testing
-  factory DependencyConfig.factory(String type,
-      {List<String> deps = const [], List<String> envs = const []}) {
+  factory DependencyConfig.factory(String type, {List<String> deps = const [], List<String> envs = const []}) {
     return DependencyConfig(
       type: ImportableType(name: type),
       typeImpl: ImportableType(name: type),
@@ -60,8 +58,7 @@ class DependencyConfig {
     );
   }
   // used for testing
-  factory DependencyConfig.singleton(String type,
-      {List<String> deps = const []}) {
+  factory DependencyConfig.singleton(String type, {List<String> deps = const []}) {
     return DependencyConfig(
       type: ImportableType(name: type),
       typeImpl: ImportableType(name: type),
@@ -168,8 +165,7 @@ class DependencyConfig {
         "preResolve": preResolve,
         "injectableType": injectableType,
         if (moduleConfig != null) 'moduleConfig': moduleConfig!.toJson(),
-        if (disposeFunction != null)
-          'disposeFunction': disposeFunction!.toJson(),
+        if (disposeFunction != null) 'disposeFunction': disposeFunction!.toJson(),
         "dependsOn": dependsOn.map((v) => v.toJson()).toList(),
         "environments": environments,
         "dependencies": dependencies.map((v) => v.toJson()).toList(),
@@ -180,9 +176,7 @@ class DependencyConfig {
 
   bool get isFromModule => moduleConfig != null;
 
-  List<InjectedDependency> get positionalDependencies =>
-      dependencies.where((d) => d.isPositional).toList();
+  List<InjectedDependency> get positionalDependencies => dependencies.where((d) => d.isPositional).toList();
 
-  List<InjectedDependency> get namedDependencies =>
-      dependencies.where((d) => !d.isPositional).toList();
+  List<InjectedDependency> get namedDependencies => dependencies.where((d) => !d.isPositional).toList();
 }

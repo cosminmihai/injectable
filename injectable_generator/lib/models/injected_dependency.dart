@@ -33,11 +33,7 @@ class InjectedDependency {
 
   @override
   int get hashCode =>
-      type.hashCode ^
-      instanceName.hashCode ^
-      paramName.hashCode ^
-      isFactoryParam.hashCode ^
-      isPositional.hashCode;
+      type.hashCode ^ instanceName.hashCode ^ paramName.hashCode ^ isFactoryParam.hashCode ^ isPositional.hashCode;
 
   factory InjectedDependency.fromJson(Map<String, dynamic> json) {
     var type;

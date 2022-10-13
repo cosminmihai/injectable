@@ -48,8 +48,7 @@ void main() async {
     });
 
     test('Factory with nullable dependencies', () {
-      final FactoryWithDeps =
-          resolvedInput!.library.findType('FactoryWithNullableDeps')!;
+      final FactoryWithDeps = resolvedInput!.library.findType('FactoryWithNullableDeps')!;
       final type = ImportableType(
         name: 'FactoryWithNullableDeps',
         import: 'source.dart',
@@ -61,23 +60,18 @@ void main() async {
         isNullable: true,
       );
       expect(
-        DependencyConfig(
-            type: type,
-            typeImpl: type,
-            injectableType: InjectableType.factory,
-            dependencies: [
-              InjectedDependency(
-                type: dependencyType,
-                paramName: 'simpleFactory',
-              )
-            ]),
+        DependencyConfig(type: type, typeImpl: type, injectableType: InjectableType.factory, dependencies: [
+          InjectedDependency(
+            type: dependencyType,
+            paramName: 'simpleFactory',
+          )
+        ]),
         dependencyResolver!.resolve(FactoryWithDeps),
       );
     });
 
     test('Factory with dependencies', () {
-      final FactoryWithDeps =
-          resolvedInput!.library.findType('FactoryWithDeps')!;
+      final FactoryWithDeps = resolvedInput!.library.findType('FactoryWithDeps')!;
       final type = ImportableType(
         name: 'FactoryWithDeps',
         import: 'source.dart',
@@ -88,23 +82,18 @@ void main() async {
         import: 'source.dart',
       );
       expect(
-        DependencyConfig(
-            type: type,
-            typeImpl: type,
-            injectableType: InjectableType.factory,
-            dependencies: [
-              InjectedDependency(
-                type: dependencyType,
-                paramName: 'simpleFactory',
-              )
-            ]),
+        DependencyConfig(type: type, typeImpl: type, injectableType: InjectableType.factory, dependencies: [
+          InjectedDependency(
+            type: dependencyType,
+            paramName: 'simpleFactory',
+          )
+        ]),
         dependencyResolver!.resolve(FactoryWithDeps),
       );
     });
 
     test('Factory with nullable factoryParams', () {
-      final FactoryWithDeps =
-          resolvedInput!.library.findType('FactoryWithNullableFactoryParams')!;
+      final FactoryWithDeps = resolvedInput!.library.findType('FactoryWithNullableFactoryParams')!;
       final type = ImportableType(
         name: 'FactoryWithNullableFactoryParams',
         import: 'source.dart',
@@ -116,24 +105,19 @@ void main() async {
         isNullable: true,
       );
       expect(
-        DependencyConfig(
-            type: type,
-            typeImpl: type,
-            injectableType: InjectableType.factory,
-            dependencies: [
-              InjectedDependency(
-                type: dependencyType,
-                paramName: 'simpleFactory',
-                isFactoryParam: true,
-              )
-            ]),
+        DependencyConfig(type: type, typeImpl: type, injectableType: InjectableType.factory, dependencies: [
+          InjectedDependency(
+            type: dependencyType,
+            paramName: 'simpleFactory',
+            isFactoryParam: true,
+          )
+        ]),
         dependencyResolver!.resolve(FactoryWithDeps),
       );
     });
 
     test('Factory with factoryParams', () {
-      final FactoryWithDeps =
-          resolvedInput!.library.findType('FactoryWithFactoryParams')!;
+      final FactoryWithDeps = resolvedInput!.library.findType('FactoryWithFactoryParams')!;
       final type = ImportableType(
         name: 'FactoryWithFactoryParams',
         import: 'source.dart',
@@ -144,24 +128,19 @@ void main() async {
         import: 'source.dart',
       );
       expect(
-        DependencyConfig(
-            type: type,
-            typeImpl: type,
-            injectableType: InjectableType.factory,
-            dependencies: [
-              InjectedDependency(
-                type: dependencyType,
-                paramName: 'simpleFactory',
-                isFactoryParam: true,
-              )
-            ]),
+        DependencyConfig(type: type, typeImpl: type, injectableType: InjectableType.factory, dependencies: [
+          InjectedDependency(
+            type: dependencyType,
+            paramName: 'simpleFactory',
+            isFactoryParam: true,
+          )
+        ]),
         dependencyResolver!.resolve(FactoryWithDeps),
       );
     });
 
     test('Simple Factory as abstract no dependencies', () {
-      var factoryAsAbstract =
-          resolvedInput!.library.findType('FactoryAsAbstract')!;
+      var factoryAsAbstract = resolvedInput!.library.findType('FactoryAsAbstract')!;
 
       final type = ImportableType(
         name: 'IFactory',
@@ -184,8 +163,7 @@ void main() async {
     });
 
     test('Async factory with nullable dependencies', () {
-      final FactoryWithDeps =
-          resolvedInput!.library.findType('AsyncFactoryWithNullableDeps')!;
+      final FactoryWithDeps = resolvedInput!.library.findType('AsyncFactoryWithNullableDeps')!;
       final type = ImportableType(
         name: 'AsyncFactoryWithNullableDeps',
         import: 'source.dart',
@@ -215,8 +193,7 @@ void main() async {
     });
 
     test('Async factory with non nullable dependencies', () {
-      final FactoryWithDeps =
-          resolvedInput!.library.findType('AsyncFactoryWithNonNullableDeps')!;
+      final FactoryWithDeps = resolvedInput!.library.findType('AsyncFactoryWithNonNullableDeps')!;
       final errorMessage = 'Async factory params must be nullable';
       var resultError;
       try {

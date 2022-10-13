@@ -9,8 +9,7 @@ abstract class ImportableTypeResolver {
 
   ImportableType resolveType(DartType type);
 
-  ImportableType resolveFunctionType(FunctionType function,
-      [ExecutableElement? executableElement]);
+  ImportableType resolveFunctionType(FunctionType function, [ExecutableElement? executableElement]);
 
   static String? relative(String? path, Uri? to) {
     if (path == null || to == null) {
@@ -18,16 +17,12 @@ abstract class ImportableTypeResolver {
     }
     var fileUri = Uri.parse(path);
     var libName = to.pathSegments.first;
-    if ((to.scheme == 'package' &&
-            fileUri.scheme == 'package' &&
-            fileUri.pathSegments.first == libName) ||
+    if ((to.scheme == 'package' && fileUri.scheme == 'package' && fileUri.pathSegments.first == libName) ||
         (to.scheme == 'asset' && fileUri.scheme != 'package')) {
       if (fileUri.path == to.path) {
         return fileUri.pathSegments.last;
       } else {
-        return p.posix
-            .relative(fileUri.path, from: to.path)
-            .replaceFirst('../', '');
+        return p.posix.relative(fileUri.path, from: to.path).replaceFirst('../', '');
       }
     } else {
       return path;
@@ -58,8 +53,7 @@ class ImportableTypeResolverImpl extends ImportableTypeResolver {
     }
 
     for (var lib in libs) {
-      if (!_isCoreDartType(lib) &&
-          lib.exportNamespace.definedNames.values.contains(element)) {
+      if (!_isCoreDartType(lib) && lib.exportNamespace.definedNames.values.contains(element)) {
         return lib.identifier;
       }
     }
@@ -71,10 +65,8 @@ class ImportableTypeResolverImpl extends ImportableTypeResolver {
   }
 
   @override
-  ImportableType resolveFunctionType(FunctionType type,
-      [ExecutableElement? executableElement]) {
-    final functionElement =
-        executableElement ?? type.element ?? type.alias?.element;
+  ImportableType resolveFunctionType(FunctionType type, [ExecutableElement? executableElement]) {
+    final functionElement = executableElement ?? type.element2 ?? type.alias?.element;
     if (functionElement == null) {
       throw 'Can not resolve function type \nTry using an alias e.g typedef MyFunction = ${type.getDisplayString(withNullability: false)};';
     }
@@ -82,7 +74,7 @@ class ImportableTypeResolverImpl extends ImportableTypeResolver {
     var functionName = displayName;
 
     Element elementToImport = functionElement;
-    var enclosingElement = functionElement.enclosingElement;
+    var enclosingElement = functionElement.enclosingElement3;
 
     if (enclosingElement != null && enclosingElement is ClassElement) {
       functionName = '${enclosingElement.displayName}.$displayName';
@@ -100,13 +92,12 @@ class ImportableTypeResolverImpl extends ImportableTypeResolver {
     final importableTypes = <ImportableType>[];
     if (typeToCheck is ParameterizedType) {
       for (DartType type in typeToCheck.typeArguments) {
-        if (type.element is TypeParameterElement) {
+        if (type.element2 is TypeParameterElement) {
           importableTypes.add(ImportableType(name: 'dynamic'));
         } else {
           importableTypes.add(ImportableType(
-            name: type.element?.name ??
-                type.getDisplayString(withNullability: false),
-            import: resolveImport(type.element),
+            name: type.element2?.name ?? type.getDisplayString(withNullability: false),
+            import: resolveImport(type.element2),
             isNullable: type.nullabilitySuffix == NullabilitySuffix.question,
             typeArguments: _resolveTypeArguments(type),
           ));
@@ -119,9 +110,9 @@ class ImportableTypeResolverImpl extends ImportableTypeResolver {
   @override
   ImportableType resolveType(DartType type) {
     return ImportableType(
-      name: type.element?.name ?? type.getDisplayString(withNullability: false),
+      name: type.element2?.name ?? type.getDisplayString(withNullability: false),
       isNullable: type.nullabilitySuffix == NullabilitySuffix.question,
-      import: resolveImport(type.element),
+      import: resolveImport(type.element2),
       typeArguments: _resolveTypeArguments(type),
     );
   }

@@ -120,8 +120,8 @@ void main() {
           isAsync: true,
         )
       ];
-      expect(generate(dep, allDeps: allDeps),
-          'gh.factoryAsync<Demo>(() async  => Demo( await get.getAsync<Storage>()));');
+      expect(
+          generate(dep, allDeps: allDeps), 'gh.factoryAsync<Demo>(() async  => Demo( await get.getAsync<Storage>()));');
     });
 
     test("factory generator with named dependencies", () {
@@ -193,8 +193,7 @@ void main() {
 }
 
 String generate(DependencyConfig input, {List<DependencyConfig>? allDeps}) {
-  final generator = LibraryGenerator(
-      dependencies: allDeps ?? [], initializerName: 'initGetIt');
+  final generator = LibraryGenerator(dependencies: allDeps ?? [], initializerName: 'initGetIt');
   final statement = generator.buildLazyRegisterFun(input);
   final emitter = DartEmitter(
     allocator: Allocator.none,

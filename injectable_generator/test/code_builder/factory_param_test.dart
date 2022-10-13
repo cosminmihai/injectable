@@ -134,8 +134,7 @@ void main() {
 }
 
 String generate(DependencyConfig input, {List<DependencyConfig>? allDeps}) {
-  final generator = LibraryGenerator(
-      dependencies: allDeps ?? [], initializerName: 'initGetIt');
+  final generator = LibraryGenerator(dependencies: allDeps ?? [], initializerName: 'initGetIt');
   final statement = generator.buildLazyRegisterFun(input);
   final emitter = DartEmitter(
     allocator: Allocator.none,

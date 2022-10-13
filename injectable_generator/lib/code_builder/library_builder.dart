@@ -190,10 +190,7 @@ class LibraryGenerator {
             ..name = dep.moduleConfig!.initializerName
             ..returns = typeRefer(dep.typeImpl, _targetFile)
             ..type = dep.moduleConfig!.isMethod ? null : MethodType.getter
-            ..body = _buildInstance(dep,
-                    getAsyncMethodName: '_getIt.getAsync',
-                    getMethodName: '_getIt')
-                .code,
+            ..body = _buildInstance(dep, getAsyncMethodName: '_getIt.getAsync', getMethodName: '_getIt').code,
         ),
       ));
     });
@@ -228,27 +225,21 @@ class LibraryGenerator {
               (name) => Parameter((b) => b.name = name),
             ),
           )
-          ..body = dep.isFromModule
-              ? _buildInstanceForModule(dep).code
-              : _buildInstance(dep).code,
+          ..body = dep.isFromModule ? _buildInstanceForModule(dep).code : _buildInstance(dep).code,
       ).closure
     ], {
-      if (dep.instanceName != null)
-        'instanceName': literalString(dep.instanceName!),
+      if (dep.instanceName != null) 'instanceName': literalString(dep.instanceName!),
       if (dep.environments.isNotEmpty == true)
         'registerFor': literalSet(
           dep.environments.map((e) => refer('_$e')),
         ),
       if (dep.preResolve == true) 'preResolve': literalBool(true),
-      if (dep.disposeFunction != null)
-        'dispose': _getDisposeFunctionAssignment(dep.disposeFunction!)
+      if (dep.disposeFunction != null) 'dispose': _getDisposeFunctionAssignment(dep.disposeFunction!)
     }, [
       typeRefer(dep.type, _targetFile),
       ...factoryParams.values.map((p) => p.type)
     ]);
-    return dep.preResolve
-        ? registerExpression.awaited.statement
-        : registerExpression.statement;
+    return dep.preResolve ? registerExpression.awaited.statement : registerExpression.statement;
   }
 
   Map<String, Reference> _resolveFactoryParams(DependencyConfig dep) {
@@ -275,8 +266,7 @@ class LibraryGenerator {
       funcReferName = 'singleton';
     }
 
-    final instanceBuilder =
-        dep.isFromModule ? _buildInstanceForModule(dep) : _buildInstance(dep);
+    final instanceBuilder = dep.isFromModule ? _buildInstanceForModule(dep) : _buildInstance(dep);
     final registerExpression = _ghRefer.property(funcReferName).call([
       asFactory
           ? Method((b) => b
@@ -285,8 +275,7 @@ class LibraryGenerator {
             ..body = instanceBuilder.code).closure
           : instanceBuilder
     ], {
-      if (dep.instanceName != null)
-        'instanceName': literalString(dep.instanceName!),
+      if (dep.instanceName != null) 'instanceName': literalString(dep.instanceName!),
       if (dep.dependsOn.isNotEmpty)
         'dependsOn': literalList(
           dep.dependsOn.map(
@@ -297,18 +286,14 @@ class LibraryGenerator {
         'registerFor': literalSet(
           dep.environments.map((e) => refer('_$e')),
         ),
-      if (dep.signalsReady != null)
-        'signalsReady': literalBool(dep.signalsReady!),
+      if (dep.signalsReady != null) 'signalsReady': literalBool(dep.signalsReady!),
       if (dep.preResolve == true) 'preResolve': literalBool(true),
-      if (dep.disposeFunction != null)
-        'dispose': _getDisposeFunctionAssignment(dep.disposeFunction!)
+      if (dep.disposeFunction != null) 'dispose': _getDisposeFunctionAssignment(dep.disposeFunction!)
     }, [
       typeRefer(dep.type, _targetFile)
     ]);
 
-    return dep.preResolve
-        ? registerExpression.awaited.statement
-        : registerExpression.statement;
+    return dep.preResolve ? registerExpression.awaited.statement : registerExpression.statement;
   }
 
   Expression _buildInstance(
@@ -317,17 +302,14 @@ class LibraryGenerator {
     String? getMethodName,
   }) {
     final positionalParams = dep.positionalDependencies.map(
-      (iDep) => _buildParamAssignment(iDep,
-          getAsyncReferName: getAsyncMethodName, getReferName: getMethodName),
+      (iDep) => _buildParamAssignment(iDep, getAsyncReferName: getAsyncMethodName, getReferName: getMethodName),
     );
 
     final namedParams = Map.fromEntries(
       dep.namedDependencies.map(
         (iDep) => MapEntry(
           iDep.paramName,
-          _buildParamAssignment(iDep,
-              getAsyncReferName: getAsyncMethodName,
-              getReferName: getMethodName),
+          _buildParamAssignment(iDep, getAsyncReferName: getAsyncMethodName, getReferName: getMethodName),
         ),
       ),
     );
@@ -372,13 +354,11 @@ class LibraryGenerator {
         .expression;
   }
 
-  Expression _getDisposeFunctionAssignment(
-      DisposeFunctionConfig disposeFunction) {
+  Expression _getDisposeFunctionAssignment(DisposeFunctionConfig disposeFunction) {
     if (disposeFunction.isInstance) {
       return Method((b) => b
-            ..requiredParameters.add(Parameter((b) => b.name = 'i'))
-            ..body = refer('i').property(disposeFunction.name).call([]).code)
-          .closure;
+        ..requiredParameters.add(Parameter((b) => b.name = 'i'))
+        ..body = refer('i').property(disposeFunction.name).call([]).code).closure;
     } else {
       return typeRefer(disposeFunction.importableType!, _targetFile);
     }
@@ -395,10 +375,8 @@ class LibraryGenerator {
     getAsyncReferName ??= _asExtension ? 'getAsync' : 'get.getAsync';
     getReferName ??= 'get';
     final isAsync = isAsyncOrHasAsyncDependency(iDep, _dependencies);
-    final expression =
-        refer(isAsync ? getAsyncReferName : getReferName).call([], {
-      if (iDep.instanceName != null)
-        'instanceName': literalString(iDep.instanceName!),
+    final expression = refer(isAsync ? getAsyncReferName : getReferName).call([], {
+      if (iDep.instanceName != null) 'instanceName': literalString(iDep.instanceName!),
     }, [
       typeRefer(iDep.type, _targetFile, false),
     ]);

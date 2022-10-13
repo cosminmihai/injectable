@@ -42,8 +42,7 @@ void throwIf(bool condition, String message, {Element? element}) {
   }
 }
 
-void printBoxed(String message,
-    {String header = '--------------------------'}) {
+void printBoxed(String message, {String header = '--------------------------'}) {
   final pre = header;
   print("$pre\n$message\n${''.padRight(72, '-')} \n");
 }
